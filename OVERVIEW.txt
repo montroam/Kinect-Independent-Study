@@ -1,0 +1,31 @@
+OVERVIEW.txt
+
+——————————————————————————————————————————————————————————————————
+Allison Montroy
+Fall 2014
+Clarkson University
+Digital Arts and Sciences
+——————————————————————————————————————————————————————————————————
+Overview: A Kinect and Processing Project
+
+Note: To run the examples that are prior to Fisica you have to move the Fisica library out of the libraries folder so that they will work.
+
+One of my first projects with the kinect involved using the OpenKinect library and using the data from the average point tracking example and manipulating it to create a sketch where your position controls the position of the sun and changes the shapes of a fractal tree. I used an already existing Planet class to create the sun. 
+
+I then moved on to experimenting with the SimpleOpenNI library.
+
+When trying to get the Skeleton Data from the Kinect that I accessed through the SimpleOpenNI library to work with the physics world from Box2D and JBox2D, I tried a few solutions. Box2D uses shapes that are only convex (not concave), and mainly uses basic geometric shapes. When trying to make the outline of a skeleton, this can be difficult to think about, since tracing an outline would involve the shape having concave pieces. The next idea was to try and create a rectangle around the limbs and body parts. The problem with this was that the rectangles do not use multiple points, they just use one. To think this problem through, I created a simple program (rect_around_2pts) that worked out the trigonometry to draw a rectangle around two random points. After creating this file I was excited to try it out on the skeleton. Unfortunately, this didn’t quite work out for me as planned: the solution involved translating each limb. This causes problems, because you either have to use pushMatrix() and popMatrix() a bunch of times in your code, or the translation and angles are done consecutively from each other, and not from a specific origin point.
+
+I then tried to create a body/skeleton using the built in joints from the Box2D Library. This in itself was a bit of a struggle to understand, but I created an example that used fake skeleton points to create a head/shoulders joint with a neck using a revolute joint. Unfortunately, this did not work as planned (body_run). 
+
+For one trial of my project, I tried to organize the users and their skeletons using HashMaps (skel_HashMap). This proved to be difficult because once the user (stored as an Integer) was added with the skeleton(array of PVectors), unpacking the skeleton from the array was difficult.
+
+One of my last projects I worked on was creating a sketch that involved a user with a rain cloud over their head. The rain would interact with the body/silhouette of a user(Raind). This body was simplified to an ellipse that represented the skeleton’s head. Halfway through creating this project, I discovered a better physics library: Fisica. I then continued to create a new version of the sketch using this library(fisica_kinect). The problem with this program is that if too many users (2+) stand are picked up from the kinect camera, there is an assertion error. 
+
+As part of this project, I tested out the Minim library to use sounds. For this sketch, a sound of rain plays whether or not a user is picked up, but then a sound of rain hitting an umbrella plays once a user is recognized. bubbles_music works off of an example from the provided for Fisica, and adds a rectangle that can be controlled by the user to demonstrate the possibilities of interaction between shapes. music_poly creates a FPoly shape to represent the wave and adds it to the scene. A new wave shape is created ever 60 frames. music_poly2 creates a shape that is static in the center of the screen and is redrawn every 60 seconds after the last shape is killed. music_poly3 incorporates drawing the two waveforms with randomly sized and colored circles in the background, with a shape to represent the area outside of the waveform as well. This was done in an attempts to start to create boundaries that blobs could live in if waves were put on the top and bottom of the sketch as walls. music_kinect_poly does not actually have any kinect data in it yet, but it creates a wave form and adds it to the field of gravity every 60 seconds. mv_backup is a backup of the original music_visualizer in case I had made changes over top of it.
+
+In experimenting with the Minim library, I created a series sorts of music visualizers(music_visualizer). This is what drove my interest for my last project. music_visualizer draws a shape to represent the audio waveform every 100 frames. The waveform is split up into the right and left and both are drawn.
+
+As an extension off of this project, my final piece is that of a wave that is formed by the position of the users’ head and arms, which interacts with blobs. 
+
+For more specifics on libraries used check the README file, and there are comments in each sketch to help describe what is happening.
